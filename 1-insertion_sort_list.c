@@ -6,25 +6,25 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *temp, *prev, *nxt;
+	listint_t *temp, *pn, *nxt;
 
 	if (list && *list && (*list)->next)
 	{
 		temp = (*list)->next;
-		prev = temp->prev;
+		pn = temp->prev;
 		nxt = temp->next;
 
 		while (temp)
 		{
-			if (temp->n < prev->n)
+			if (temp->n < pn->n)
 			{
-				swap_list(prev, temp, nxt, list);
+				swap_list(pn, temp, nxt, list);
 			}
 			temp = nxt;
 			if (temp)
 			{
 				nxt = temp->next;
-				prev = temp->prev;
+				pn = temp->prev;
 			}
 		}
 	}
@@ -32,26 +32,26 @@ void insertion_sort_list(listint_t **list)
 
 /**
  * swap_list - swaps the position of two nodes in a linked list
- * @prev: previous node
+ * @pn: previous node
  * @temp: temp
  * @nxt: next node
  * @h: head of list
  */
-void swap_list(listint_t *prev, listint_t *temp, listint_t *nxt, listint_t **h)
+void swap_list(listint_t *pn, listint_t *temp, listint_t *nxt, listint_t **h)
 {
 
-	while (prev && temp->n < prev->n)
+	while (pn && temp->n < pn->n)
 	{
 		if (nxt)
-			nxt->prev = prev;
-		temp->next = prev;
-		temp->prev = prev->prev;
-		if (prev->prev)
-			(prev->prev)->next = temp;
-		prev->prev = temp;
-		prev->next = nxt;
-		nxt = prev;
-		prev = temp->prev;
+			nxt->prev = pn;
+		temp->next = pn;
+		temp->prev = pn->prev;
+		if (pn->prev)
+			(pn->prev)->next = temp;
+		pn->prev = temp;
+		pn->next = nxt;
+		nxt = pn;
+		pn = temp->prev;
 		if ((*h)->prev)
 			*h = (*h)->prev;
 		print_list(*h);
